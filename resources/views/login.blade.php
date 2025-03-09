@@ -1,32 +1,35 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('title', 'Login')
+
+@section('content')
     <h2>Login</h2>
 
-    <!-- Exibindo erros de validação -->
+    <!-- Mensagem de erro -->
     @if ($errors->any())
-        <div>
+        <div class="alert alert-danger">
             @foreach ($errors->all() as $error)
-                <p style="color: red;">{{ $error }}</p>
+                <p>{{ $error }}</p>
             @endforeach
         </div>
     @endif
 
-    <!-- Formulário de login -->
+    <!-- Mensagem de sucesso -->
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <form action="{{ route('login') }}" method="POST">
         @csrf
         <div>
-            <label for="email">Email:</label>
+            <label>Email:</label>
             <input type="email" name="email" value="{{ old('email') }}" required>
         </div>
 
         <div>
-            <label for="password">Senha:</label>
+            <label>Senha:</label>
             <input type="password" name="password" required>
         </div>
 
@@ -35,5 +38,5 @@
         </div>
     </form>
 
-</body>
-</html>
+    <p>Não tem uma conta? <a href="{{ route('register') }}">Cadastre-se aqui</a></p>
+@endsection

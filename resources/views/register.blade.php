@@ -1,43 +1,38 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('title', 'Cadastro')
+
+@section('content')
     <h2>Cadastro de Usuário</h2>
 
-    <!-- Exibindo erros de validação -->
+    <!-- Exibindo erros -->
     @if ($errors->any())
-        <div>
+        <div class="alert alert-danger">
             @foreach ($errors->all() as $error)
-                <p style="color: red;">{{ $error }}</p>
+                <p>{{ $error }}</p>
             @endforeach
         </div>
     @endif
 
-    <!-- Formulário de cadastro -->
     <form action="{{ route('register') }}" method="POST">
         @csrf
-
         <div>
-            <label for="name">Nome:</label>
+            <label>Nome:</label>
             <input type="text" name="name" value="{{ old('name') }}" required>
         </div>
 
         <div>
-            <label for="email">Email:</label>
+            <label>Email:</label>
             <input type="email" name="email" value="{{ old('email') }}" required>
         </div>
 
         <div>
-            <label for="password">Senha:</label>
+            <label>Senha:</label>
             <input type="password" name="password" required>
         </div>
 
         <div>
-            <label for="password_confirmation">Confirmar Senha:</label>
+            <label>Confirmar Senha:</label>
             <input type="password" name="password_confirmation" required>
         </div>
 
@@ -46,5 +41,5 @@
         </div>
     </form>
 
-</body>
-</html>
+    <p>Já tem uma conta? <a href="{{ route('login') }}">Faça login aqui</a></p>
+@endsection
