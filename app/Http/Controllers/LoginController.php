@@ -5,25 +5,32 @@ namespace App\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\LoginRequest;
 
 class LoginController extends Controller
 {
-    public function authenticate(Request $request): RedirectResponse
+    # RedirectResponse indicao tipo de retorno da minha função
+    public function authenticate(LoginRequest $request): RedirectResponse
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required']
-        ]);
+        $credentials = $request->validated();
 
         if(Auth::attempt($credentials)){
             $request->session()->regenerate();
 
-            # Se não houver uma URL armazenada, redireciona para 'dashboard' TODO
-            return redirect()->intended('dashboard');
+            return to_route('articles.index')->with('success', 'Login realizado com sucesso.');
         }
 
         return back()->withErrors([
             'email' => 'Email inválido.'
         ])->onlyInput('email');
+    }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return to_route('articles.index')->with('success', 'Você saiu com sucesso.');
     }
 }

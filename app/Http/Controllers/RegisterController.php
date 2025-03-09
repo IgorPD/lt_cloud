@@ -4,17 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\RegisterRequest;
 
 class RegisterController extends Controller
 {
-    public function store(Request $request)
+    public function store(RegisterRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'unique:users'],
-            'password' => ['required', 'string', 'min:4', 'confirmed']
-        ]);
+        $validated = $request -> validated();
 
         $user = User::create([
             'name' => $validated['name'],
@@ -22,7 +21,7 @@ class RegisterController extends Controller
             'password' => Hash::make($validated['password'])
         ]);
 
-        # TODO
-        return redirect()->route('dashboard');
+        Auth::login($user);
+        return to_route('articles.index')->with('success', 'Cadastro realizado com sucesso.');
     }
 }
