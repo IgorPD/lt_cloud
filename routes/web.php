@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\AuthorController;
 
-// Rotas de autenticação 
+// Rotas de autenticação, somente usuarios não logados podem acessar
 Route::middleware('guest')->group(function () {
 
     Route::get('/login', function () {
@@ -20,10 +22,13 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [RegisterController::class, 'store']);
 });
 
+Route::get('/index', function () {
+    return view('welcome');
+})->middleware('auth')->name('index');
 
-// Logout disponível apenas para usuários logados
-Route::middleware('auth')->group(function () {
+// disponível apenas para usuários logados
+Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::resource('articles', ArticleController::class);
+    Route::resource('authors', AuthorController::class);
 });
-
-
