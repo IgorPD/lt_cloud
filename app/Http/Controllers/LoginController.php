@@ -17,11 +17,11 @@ class LoginController extends Controller
         if(Auth::attempt($credentials)){
             $request->session()->regenerate();
 
-            return to_route('articles.index')->with('success', 'Login realizado com sucesso.');
+            return to_route('dashboard')->with('success', 'Login realizado com sucesso.');
         }
 
         return back()->withErrors([
-            'email' => 'Email inválido.'
+            'email' => 'Email e/ou senha inválidos.'
         ])->onlyInput('email');
     }
 
@@ -31,6 +31,6 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return to_route('articles.index')->with('success', 'Você saiu com sucesso.');
+        return to_route('login')->with('success', 'Você saiu com sucesso.');
     }
 }

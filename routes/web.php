@@ -10,25 +10,26 @@ use App\Http\Controllers\AuthorController;
 Route::middleware('guest')->group(function () {
 
     Route::get('/login', function () {
-        return view('login');
+        return view('auth.login');
     })->name('login');
 
     Route::post('/login', [LoginController::class, 'authenticate']);
 
     Route::get('/register', function () {
-        return view('register');
+        return view('auth.register');
     })->name('register');
 
     Route::post('/register', [RegisterController::class, 'store']);
 });
 
-Route::get('/index', function () {
-    return view('welcome');
-})->middleware('auth')->name('index');
-
 // disponível apenas para usuários logados
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
     Route::resource('articles', ArticleController::class);
     Route::resource('authors', AuthorController::class);
 });

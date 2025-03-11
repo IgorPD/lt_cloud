@@ -13,6 +13,11 @@ class Article extends Model
     # Atributos que podem ser preenchidos em massa
     protected $fillable = ['title', 'content', 'slug', 'excerpt', 'published_at', 'status'];
 
+    # Atributos que devem ser convertidos para tipos de dados nativos
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
+
     // Sempre gerar um slug ao criar um artigo, para converter o título em uma URL amigável
     protected static function boot()
     {
