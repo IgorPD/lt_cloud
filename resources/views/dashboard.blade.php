@@ -8,7 +8,7 @@
     <p class="lead">Gerencie seus artigos e autores de forma simples e intuitiva.</p>
     <div class="row mt-5">
       <div class="col-md-6 mb-3">
-        <div class="card">
+        <div class="card shadow-sm">
           <div class="card-body">
             <h5 class="card-title">Artigos</h5>
             <p class="card-text">Veja, crie, edite e exclua artigos.</p>
@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="col-md-6 mb-3">
-        <div class="card">
+        <div class="card shadow-sm">
           <div class="card-body">
             <h5 class="card-title">Autores</h5>
             <p class="card-text">Gerencie os autores dos artigos.</p>

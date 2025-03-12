@@ -30,6 +30,8 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
+
+
     Route::resource('articles', ArticleController::class);
     Route::resource('authors', AuthorController::class);
 });
