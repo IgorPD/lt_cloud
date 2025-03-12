@@ -10,26 +10,22 @@
     @csrf
     @method('PUT')
     <div class="mb-3">
-      <label for="title" class="form-label">Título</label>
+      <label for="title" class="form-label">Título*</label>
       <input type="text" class="form-control" name="title" id="title" value="{{ old('title', $article->title) }}" required>
-    </div>
-    <div class="mb-3">
-      <label for="slug" class="form-label">Slug</label>
-      <input type="text" class="form-control" name="slug" id="slug" value="{{ old('slug', $article->slug) }}" required>
     </div>
     <div class="mb-3">
       <label for="excerpt" class="form-label">Resumo</label>
       <textarea class="form-control" name="excerpt" id="excerpt" rows="2">{{ old('excerpt', $article->excerpt) }}</textarea>
     </div>
     <div class="mb-3">
-      <label for="content" class="form-label">Conteúdo</label>
+      <label for="content" class="form-label">Conteúdo*</label>
       <textarea class="form-control" name="content" id="content" rows="5" required>{{ old('content', $article->content) }}</textarea>
     </div>
     <div class="mb-3">
 
-      <label for="published_at" class="form-label">Data de Publicação</label>
+      <label for="published_at" class="form-label">Data de Publicação*</label>
       <input type="datetime-local" class="form-control" name="published_at" id="published_at"
-             value="{{ old('published_at', $article->published_at ? $article->published_at->format('Y-m-d\TH:i') : '') }}">
+             value="{{ old('published_at', $article->published_at ? $article->published_at->format('Y-m-d\TH:i') : '') }}" required>
     </div>
     <div class="mb-3">
       <label for="status" class="form-label">Status</label>

@@ -11,7 +11,7 @@ class Article extends Model
     use HasFactory;
 
     # Atributos que podem ser preenchidos em massa
-    protected $fillable = ['title', 'content', 'slug', 'excerpt', 'published_at', 'status'];
+    protected $fillable = ['title', 'content', 'excerpt', 'published_at', 'status'];
 
     # Atributos que devem ser convertidos para tipos de dados nativos
     protected $casts = [
@@ -31,4 +31,15 @@ class Article extends Model
     {
         return $this->belongsToMany(Author::class, 'article_author');
     }
+
+    public function getShortExcerptAttribute()
+    {
+        return Str::limit($this->excerpt, 60, '...');
+    }
+
+    public function getShortTitleAttribute()
+    {
+        return Str::limit($this->title, 30, '...');
+    }
+
 }

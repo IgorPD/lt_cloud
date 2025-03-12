@@ -18,7 +18,8 @@ class ArticleUpdateRequest extends FormRequest
             'content' => 'required|string',
             'excerpt'  => 'nullable|string',
             'status' => 'required|in:ativado,desativado',
-            'authors' => 'required|array',
+            'authors' => 'required|array|min:1',
+            'authors.*' => 'required|exists:authors,id',
             'published_at' => 'required|date',
         ];
     }

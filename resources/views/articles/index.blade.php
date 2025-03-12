@@ -3,18 +3,21 @@
 @section('title', 'Artigos')
 
 @section('content')
-  <div class="d-flex justify-content-between mb-3">
-    <h1>Artigos</h1>
-    <a href="{{ route('articles.create') }}" class="btn btn-primary">Novo Artigo</a>
+  <div class="d-flex justify-content-between justify-itens-center mb-3">
+    <div>
+        <h1 >Artigos</h1>
+    </div>
+    <div>
+        <a href="{{ route('articles.create') }}" class="btn btn-primary">Novo Artigo</a>
+    </div>
   </div>
   <table class="table table-bordered">
     <thead>
       <tr>
         <!--<th>ID</th>-->
         <th>Título</th>
-        <th>Slug</th>
         <th>Resumo</th>
-        <th>Publicado Em</th>
+        <th>Data de Publicação</th>
         <th>Status</th>
         <th>Autores</th>
         <th>Ações</th>
@@ -24,9 +27,8 @@
       @foreach($articles as $article)
         <tr>
           <!--<td>{{ $article->id }}</td>-->
-          <td>{{ $article->title }}</td>
-          <td>{{ $article->slug }}</td>
-          <td>{{ $article->excerpt }}</td>
+          <td>{{ $article->short_title }}</td>
+          <td>{{ $article->short_excerpt }}</td>
           <td>{{ $article->published_at ? $article->published_at->format('d/m/Y H:i') : '-' }}</td>
           <td>{{ ucfirst($article->status) }}</td>
           <td>

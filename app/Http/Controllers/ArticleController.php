@@ -31,7 +31,6 @@ class ArticleController extends Controller
         return to_route('articles.index')->with('success', 'Artigo cadastrado com sucesso.');
     }
 
-
     public function edit(Article $article)
     {
         $authors = Author::all();
