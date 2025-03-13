@@ -3,13 +3,28 @@
 @section('title', 'Autores')
 
 @section('content')
-    <div class="d-flex justify-content-between justify-itens-center mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
             <h1>Autores</h1>
         </div>
         <div>
             <a href="{{ route('authors.create') }}" class="btn btn-primary">Novo Autor</a>
         </div>
+    </div>
+
+    <div class="mb-3">
+        <form action="{{ route('authors.index') }}" method="GET">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Buscar autores..."
+                    value="{{ request('search') }}">
+                <select name="status" class="form-select" style="max-width: 170px;">
+                    <option value="">Todos os status</option>
+                    <option value="ativado" {{ request('status') == 'ativado' ? 'selected' : '' }}>Ativado</option>
+                    <option value="desativado" {{ request('status') == 'desativado' ? 'selected' : '' }}>Desativado</option>
+                </select>
+                <button type="submit" class="btn btn-outline-primary">Buscar</button>
+            </div>
+        </form>
     </div>
 
     <div class="w-100 overflow-x-auto">
@@ -30,20 +45,16 @@
                         <td>{{ $author->email }}</td>
                         <td>{{ $author->short_bio }}</td>
                         <td>{{ ucfirst($author->status) }}</td>
-                        <td>
+                        <td class="text-nowrap">
                             <div class="d-flex gap-2">
-                                <div>
-                                    <a href="{{ route('authors.edit', $author) }}" class="btn btn-sm btn-warning">Editar</a>
-                                </div>
-                                <div>
-                                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#confirmDeleteModal{{ $author->id }}">
-                                        Excluir
-                                    </button>
-                                </div>
+                                <a href="{{ route('authors.edit', $author) }}" class="btn btn-sm btn-warning">Editar</a>
+                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#confirmDeleteModal{{ $author->id }}">
+                                    Excluir
+                                </button>
                             </div>
 
-                            <!-- Modal de confirmação para exclusão do autor -->
+                            <!-- Modal de confirmação para exclusão -->
                             <div class="modal fade" id="confirmDeleteModal{{ $author->id }}" tabindex="-1"
                                 aria-labelledby="confirmDeleteModalLabel{{ $author->id }}" aria-hidden="true">
                                 <div class="modal-dialog">

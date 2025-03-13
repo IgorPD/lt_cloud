@@ -5,13 +5,31 @@ use Illuminate\Routing\Controller;
 use App\Models\Author;
 use App\Http\Requests\AuthorStoreRequest;
 use App\Http\Requests\AuthorUpdateRequest;
+use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $authors = Author::all();
+        $search = $request->input('search');
+        $status = $request->input('status');
+
+        $query = Author::query();
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                  ->orWhere('email', 'like', '%' . $search . '%');
+            });
+        }
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        $authors = $query->get();
+
         return view('authors.index', compact('authors'));
     }
 

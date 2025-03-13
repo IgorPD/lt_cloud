@@ -3,18 +3,44 @@
 @section('title', 'Artigos')
 
 @section('content')
-  <div class="d-flex justify-content-between justify-itens-center mb-3">
+  <div class="d-flex justify-content-between align-items-center mb-3">
     <div>
-        <h1 >Artigos</h1>
+        <h1>Artigos</h1>
     </div>
     <div>
         <a href="{{ route('articles.create') }}" class="btn btn-primary">Novo Artigo</a>
     </div>
   </div>
+
+  <div class="mb-3">
+    <form action="{{ route('articles.index') }}" method="GET">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Buscar artigos..." value="{{ request('search') }}">
+
+            <select name="status" class="form-select" style="max-width: 170px;">
+                <option value="">Todos os status</option>
+                <option value="ativado" {{ request('status') == 'ativado' ? 'selected' : '' }}>Ativado</option>
+                <option value="desativado" {{ request('status') == 'desativado' ? 'selected' : '' }}>Desativado</option>
+            </select>
+
+            <select name="author" class="form-select" style="max-width: 170px;">
+                <option value="">Todos os autores</option>
+                @foreach ($allAuthors as $author)
+                    <option value="{{ $author->id }}" {{ request('author') == $author->id ? 'selected' : '' }}>
+                        {{ $author->name }}
+                    </option>
+                @endforeach
+            </select>
+
+            <input type="date" name="from_date" class="form-control" placeholder="Data início" value="{{ request('from_date') }}">
+            <button type="submit" class="btn btn-outline-primary">Buscar</button>
+        </div>
+    </form>
+  </div>
+
   <table class="table table-bordered">
     <thead>
       <tr>
-        <!--<th>ID</th>-->
         <th>Título</th>
         <th>Resumo</th>
         <th>Data de Publicação</th>
@@ -26,7 +52,6 @@
     <tbody>
       @foreach($articles as $article)
         <tr>
-          <!--<td>{{ $article->id }}</td>-->
           <td>{{ $article->short_title }}</td>
           <td>{{ $article->short_excerpt }}</td>
           <td>{{ $article->published_at ? $article->published_at->format('d/m/Y H:i') : '-' }}</td>
@@ -36,7 +61,7 @@
               <span class="badge bg-secondary">{{ $author->name }}</span>
             @endforeach
           </td>
-          <td>
+          <td class="text-nowrap">
             <a href="{{ route('articles.edit', $article) }}" class="btn btn-sm btn-warning">Editar</a>
             <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $article->id }}">
               Excluir
