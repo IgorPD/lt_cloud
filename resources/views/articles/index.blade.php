@@ -43,7 +43,7 @@
       <tr>
         <th>Título</th>
         <th>Resumo</th>
-        <th>Data de Publicação</th>
+        <th>Data</th>
         <th>Status</th>
         <th>Autores</th>
         <th>Ações</th>
@@ -62,10 +62,12 @@
             @endforeach
           </td>
           <td class="text-nowrap">
-            <a href="{{ route('articles.edit', $article) }}" class="btn btn-sm btn-warning">Editar</a>
-            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $article->id }}">
-              Excluir
-            </button>
+            <div class="d-flex gap-1">
+                <a href="{{ route('articles.edit', $article) }}" class="btn btn-sm btn-warning">Editar</a>
+                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $article->id }}">
+                  Excluir
+                </button>
+            </div>
             <!-- Modal de confirmação para exclusão do artigo -->
             <div class="modal fade" id="confirmDeleteModal{{ $article->id }}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel{{ $article->id }}" aria-hidden="true">
               <div class="modal-dialog">

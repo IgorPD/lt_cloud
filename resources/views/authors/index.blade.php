@@ -46,7 +46,7 @@
                         <td>{{ $author->short_bio }}</td>
                         <td>{{ ucfirst($author->status) }}</td>
                         <td class="text-nowrap">
-                            <div class="d-flex gap-2">
+                            <div class="d-flex gap-1">
                                 <a href="{{ route('authors.edit', $author) }}" class="btn btn-sm btn-warning">Editar</a>
                                 <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#confirmDeleteModal{{ $author->id }}">
